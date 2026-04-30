@@ -24,11 +24,13 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     redirect('pages/login.php');
 }
 
+
 $pdo = getPDO();
 $statement = $pdo->prepare('SELECT id, nom, prenom, email, password, telephone, role, created_at FROM users WHERE email = :email LIMIT 1');
 $statement->execute([
     'email' => $email,
 ]);
+
 
 $user = $statement->fetch();
 
