@@ -1,0 +1,14 @@
+/assets/uploads/*
+!/assets/uploads/.gitkeep
+
+/storage/sessions/*
+!/storage/sessions/.gitkeep
+
+/.idea/
+/.vscode/
+/vendor/
+/node_modules/
+
+Thumbs.db
+Desktop.ini
+.DS_Store
