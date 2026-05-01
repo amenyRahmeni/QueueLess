@@ -7,12 +7,14 @@ if (!is_post_request()) {
     redirect('admin/add_service.php');
 }
 
+
 $nom = trim((string) ($_POST['nom'] ?? ''));
 $description = trim((string) ($_POST['description'] ?? ''));
 $categorie = trim((string) ($_POST['categorie'] ?? ''));
 $adresse = trim((string) ($_POST['adresse'] ?? ''));
 $dureeMoyenne = (int) ($_POST['duree_moyenne'] ?? 0);
 $actif = isset($_POST['actif']) ? 1 : 0;
+
 
 set_old_input([
     'nom' => $nom,
