@@ -57,6 +57,7 @@ try {
         'user_id' => $userId,
         'service_id' => $serviceId,
     ]);
+    
     $reservation = $reservationStatement->fetch();
 
     if (!$reservation || (int) ($reservation['can_review'] ?? 0) !== 1) {
@@ -71,6 +72,7 @@ try {
             note = VALUES(note),
             commentaire = VALUES(commentaire)'
     );
+    
     $reviewStatement->execute([
         'user_id' => $userId,
         'service_id' => $serviceId,
