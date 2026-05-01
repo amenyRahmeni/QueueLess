@@ -7,6 +7,7 @@ if (!is_post_request()) {
     redirect('admin/add_slot.php');
 }
 
+
 $serviceId = (int) ($_POST['service_id'] ?? 0);
 $dateSlot = trim((string) ($_POST['date_slot'] ?? ''));
 $heureDebut = trim((string) ($_POST['heure_debut'] ?? ''));
