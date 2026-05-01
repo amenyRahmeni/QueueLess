@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $_SESSION = [];
 
+
 if (ini_get('session.use_cookies')) {
     $params = session_get_cookie_params();
 
@@ -21,6 +22,7 @@ if (ini_get('session.use_cookies')) {
 
 session_destroy();
 session_start();
+
 
 clear_old_input();
 set_flash_message('success', 'Vous avez ete deconnecte avec succes.');
