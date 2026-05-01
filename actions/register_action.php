@@ -7,6 +7,7 @@ if (!is_post_request()) {
     redirect('pages/register.php');
 }
 
+
 $nom = trim((string) ($_POST['nom'] ?? ''));
 $prenom = trim((string) ($_POST['prenom'] ?? ''));
 $email = trim((string) ($_POST['email'] ?? ''));
@@ -40,6 +41,7 @@ if ($password !== $confirmPassword) {
     set_flash_message('error', 'Les mots de passe ne correspondent pas.');
     redirect('pages/register.php');
 }
+
 
 $pdo = getPDO();
 $checkStatement = $pdo->prepare('SELECT id FROM users WHERE email = :email LIMIT 1');
@@ -77,6 +79,7 @@ if ($user) {
     session_regenerate_id(true);
     $_SESSION['user'] = $user;
 }
+
 
 clear_old_input();
 set_flash_message('success', 'Compte cree avec succes. Bienvenue sur QueueLess.');
