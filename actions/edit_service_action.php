@@ -7,6 +7,7 @@ if (!is_post_request()) {
     redirect('admin/services.php');
 }
 
+
 $serviceId = (int) ($_POST['service_id'] ?? 0);
 $nom = trim((string) ($_POST['nom'] ?? ''));
 $description = trim((string) ($_POST['description'] ?? ''));
