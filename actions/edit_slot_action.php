@@ -7,6 +7,7 @@ if (!is_post_request()) {
     redirect('admin/slots.php');
 }
 
+
 $slotId = (int) ($_POST['slot_id'] ?? 0);
 $serviceId = (int) ($_POST['service_id'] ?? 0);
 $dateSlot = trim((string) ($_POST['date_slot'] ?? ''));
