@@ -19,6 +19,7 @@ set_old_input([
     'commentaire' => $commentaire,
 ]);
 
+
 if ($reservationId <= 0 || $serviceId <= 0) {
     set_flash_message('error', 'Informations d avis invalides.');
     redirect('pages/my_reservations.php');
@@ -33,6 +34,7 @@ if ($commentaire === '') {
     set_flash_message('error', 'Veuillez ajouter un commentaire pour votre avis.');
     redirect('pages/add_review.php?reservation_id=' . $reservationId);
 }
+
 
 try {
     $pdo = getPDO();
@@ -57,7 +59,7 @@ try {
         'user_id' => $userId,
         'service_id' => $serviceId,
     ]);
-    
+
     $reservation = $reservationStatement->fetch();
 
     if (!$reservation || (int) ($reservation['can_review'] ?? 0) !== 1) {
@@ -86,5 +88,6 @@ try {
     set_flash_message('error', 'Impossible d enregistrer votre avis pour le moment.');
     redirect('pages/add_review.php?reservation_id=' . $reservationId);
 }
+
 
 redirect('pages/my_reservations.php');
