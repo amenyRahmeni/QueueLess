@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../includes/admin_check.php';
+require_once __DIR__ . '/../includes/owner_check.php';
 
 if (!is_post_request()) {
-    redirect('admin/add_slot.php');
+    redirect('owner/add_slot.php');
 }
 
 
@@ -16,16 +16,22 @@ $disponible = isset($_POST['disponible']) ? 1 : 0;
 
 if ($serviceId <= 0 || $dateSlot === '' || $heureDebut === '' || $heureFin === '') {
     set_flash_message('error', 'Veuillez remplir tous les champs du creneau.');
-    redirect('admin/add_slot.php');
+    redirect('owner/add_slot.php');
 }
 
 if ($heureFin <= $heureDebut) {
     set_flash_message('error', 'L heure de fin doit etre superieure a l heure de debut.');
-    redirect('admin/add_slot.php');
+    redirect('owner/add_slot.php');
 }
 
 try {
     $pdo = getPDO();
+
+    if (!current_user_owns_service($pdo, $serviceId)) {
+        set_flash_message('error', 'Vous ne pouvez ajouter des creneaux que pour vos services.');
+        redirect('owner/add_slot.php');
+    }
+
     $statement = $pdo->prepare(
         'INSERT INTO slots (service_id, date_slot, heure_debut, heure_fin, disponible)
         VALUES (:service_id, :date_slot, :heure_debut, :heure_fin, :disponible)'
@@ -39,9 +45,8 @@ try {
     ]);
 
     set_flash_message('success', 'Le creneau a ete ajoute avec succes.');
-    redirect('admin/slots.php');
+    redirect('owner/slots.php');
 } catch (Throwable $exception) {
     set_flash_message('error', 'Impossible d ajouter ce creneau. Verifiez les donnees saisies.');
-    redirect('admin/add_slot.php');
+    redirect('owner/add_slot.php');
 }
-
