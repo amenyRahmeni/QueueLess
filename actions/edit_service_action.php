@@ -13,6 +13,7 @@ $nom = trim((string) ($_POST['nom'] ?? ''));
 $description = trim((string) ($_POST['description'] ?? ''));
 $categorie = trim((string) ($_POST['categorie'] ?? ''));
 $adresse = trim((string) ($_POST['adresse'] ?? ''));
+$ownerId = (int) ($_POST['owner_id'] ?? 0);
 $dureeMoyenne = (int) ($_POST['duree_moyenne'] ?? 0);
 $actif = isset($_POST['actif']) ? 1 : 0;
 
@@ -28,6 +29,15 @@ if ($nom === '' || $description === '' || $categorie === '' || $adresse === '' |
 
 try {
     $pdo = getPDO();
+
+    if ($ownerId > 0) {
+        $ownerStatement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id AND role = "owner"');
+        $ownerStatement->execute(['id' => $ownerId]);
+        if ((int) $ownerStatement->fetchColumn() === 0) {
+            set_flash_message('error', 'Proprietaire du service invalide.');
+            redirect('admin/edit_service.php?id=' . $serviceId);
+        }
+    }
 
     $serviceStatement = $pdo->prepare('SELECT image FROM services WHERE id = :id LIMIT 1');
     $serviceStatement->execute([
@@ -51,7 +61,8 @@ try {
 
     $updateStatement = $pdo->prepare(
         'UPDATE services
-        SET nom = :nom,
+        SET owner_id = :owner_id,
+            nom = :nom,
             description = :description,
             categorie = :categorie,
             adresse = :adresse,
@@ -61,6 +72,7 @@ try {
         WHERE id = :id'
     );
     $updateStatement->execute([
+        'owner_id' => $ownerId > 0 ? $ownerId : null,
         'nom' => $nom,
         'description' => $description,
         'categorie' => $categorie,
@@ -77,4 +89,3 @@ try {
     set_flash_message('error', $exception->getMessage());
     redirect('admin/edit_service.php?id=' . $serviceId);
 }
-
