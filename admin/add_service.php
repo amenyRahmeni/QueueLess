@@ -8,6 +8,15 @@ $pageDescription = 'Ajout d un service QueueLess.';
 $currentPage = 'admin_services';
 $extraCss = ['dashboard.css'];
 $extraJs = ['dashboard.js'];
+$owners = [];
+
+try {
+    $pdo = getPDO();
+    $ownersStatement = $pdo->query('SELECT id, nom, prenom, email FROM users WHERE role = "owner" ORDER BY nom ASC, prenom ASC');
+    $owners = $ownersStatement->fetchAll();
+} catch (Throwable $exception) {
+    $owners = [];
+}
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
@@ -42,6 +51,18 @@ require_once __DIR__ . '/../includes/header.php';
                             <label for="categorie">Categorie</label>
                             <input type="text" id="categorie" name="categorie" value="<?= e(old('categorie')); ?>" placeholder="Banque, Restaurant..." required>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="owner_id">Proprietaire du service</label>
+                        <select id="owner_id" name="owner_id">
+                            <option value="0">Non assigne</option>
+                            <?php foreach ($owners as $owner): ?>
+                                <option value="<?= e((string) $owner['id']); ?>" <?= (int) old('owner_id', '0') === (int) $owner['id'] ? 'selected' : ''; ?>>
+                                    <?= e(trim((string) (($owner['prenom'] ?? '') . ' ' . ($owner['nom'] ?? '')))); ?> - <?= e((string) $owner['email']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -86,4 +107,3 @@ require_once __DIR__ . '/../includes/header.php';
 </section>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
