@@ -45,8 +45,4 @@ $_SESSION['user'] = $user;
 
 clear_old_input();
 set_flash_message('success', 'Connexion reussie. Bienvenue sur QueueLess.');
-if (($user['role'] ?? 'user') === 'admin') {
-    redirect('admin/dashboard.php');
-}
-
-redirect('pages/user_dashboard.php');
+redirect(user_dashboard_path());
