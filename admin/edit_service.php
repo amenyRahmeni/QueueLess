@@ -11,11 +11,12 @@ if ($serviceId <= 0) {
 }
 
 $service = null;
+$owners = [];
 
 try {
     $pdo = getPDO();
     $statement = $pdo->prepare(
-        'SELECT id, nom, description, categorie, adresse, image, duree_moyenne, actif
+        'SELECT id, owner_id, nom, description, categorie, adresse, image, duree_moyenne, actif
         FROM services
         WHERE id = :id
         LIMIT 1'
@@ -24,6 +25,9 @@ try {
         'id' => $serviceId,
     ]);
     $service = $statement->fetch();
+
+    $ownersStatement = $pdo->query('SELECT id, nom, prenom, email FROM users WHERE role = "owner" ORDER BY nom ASC, prenom ASC');
+    $owners = $ownersStatement->fetchAll();
 } catch (Throwable $exception) {
     $service = null;
 }
@@ -74,6 +78,18 @@ require_once __DIR__ . '/../includes/header.php';
                             <label for="categorie">Categorie</label>
                             <input type="text" id="categorie" name="categorie" value="<?= e((string) $service['categorie']); ?>" required>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="owner_id">Proprietaire du service</label>
+                        <select id="owner_id" name="owner_id">
+                            <option value="0">Non assigne</option>
+                            <?php foreach ($owners as $owner): ?>
+                                <option value="<?= e((string) $owner['id']); ?>" <?= (int) $service['owner_id'] === (int) $owner['id'] ? 'selected' : ''; ?>>
+                                    <?= e(trim((string) (($owner['prenom'] ?? '') . ' ' . ($owner['nom'] ?? '')))); ?> - <?= e((string) $owner['email']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
 
                     <div class="form-group">
