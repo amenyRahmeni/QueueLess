@@ -12,14 +12,23 @@ $nom = trim((string) ($_POST['nom'] ?? ''));
 $prenom = trim((string) ($_POST['prenom'] ?? ''));
 $email = trim((string) ($_POST['email'] ?? ''));
 $telephone = trim((string) ($_POST['telephone'] ?? ''));
+$accountType = (string) ($_POST['account_type'] ?? 'user');
 $password = (string) ($_POST['password'] ?? '');
 $confirmPassword = (string) ($_POST['confirm_password'] ?? '');
+$allowedAccountTypes = ['admin', 'user', 'owner'];
+
+if (!in_array($accountType, $allowedAccountTypes, true)) {
+    $accountType = 'user';
+}
+
+$role = $accountType;
 
 set_old_input([
     'nom' => $nom,
     'prenom' => $prenom,
     'email' => $email,
     'telephone' => $telephone,
+    'account_type' => $role,
 ]);
 
 if ($nom === '' || $prenom === '' || $email === '' || $telephone === '' || $password === '' || $confirmPassword === '') {
@@ -42,7 +51,6 @@ if ($password !== $confirmPassword) {
     redirect('pages/register.php');
 }
 
-
 $pdo = getPDO();
 $checkStatement = $pdo->prepare('SELECT id FROM users WHERE email = :email LIMIT 1');
 $checkStatement->execute([
@@ -64,7 +72,7 @@ $insertStatement->execute([
     'email' => $email,
     'password' => password_hash($password, PASSWORD_DEFAULT),
     'telephone' => $telephone,
-    'role' => 'user',
+    'role' => $role,
 ]);
 
 $userId = (int) $pdo->lastInsertId();
@@ -83,4 +91,4 @@ if ($user) {
 
 clear_old_input();
 set_flash_message('success', 'Compte cree avec succes. Bienvenue sur QueueLess.');
-redirect('pages/user_dashboard.php');
+redirect(user_dashboard_path());
