@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/admin_check.php';
 
+set_flash_message('warning', 'La gestion des creneaux est maintenant reservee au proprietaire du service.');
+redirect('admin/services.php');
+
+
 $pageTitle = 'Creneaux';
 $pageDescription = 'Gestion des creneaux QueueLess.';
 $currentPage = 'admin_slots';
@@ -137,4 +141,3 @@ require_once __DIR__ . '/../includes/header.php';
 </section>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
