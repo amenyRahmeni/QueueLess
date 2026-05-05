@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/admin_check.php';
 
+
 $pageTitle = 'Statistiques Admin';
 $pageDescription = 'Statistiques QueueLess.';
 $currentPage = 'admin_stats';
