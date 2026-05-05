@@ -22,12 +22,14 @@ try {
             s.adresse,
             s.actif,
             s.duree_moyenne,
+            CONCAT(COALESCE(u.prenom, ""), " ", COALESCE(u.nom, "")) AS owner_name,
             (
                 SELECT COUNT(*)
                 FROM slots sl
                 WHERE sl.service_id = s.id
             ) AS total_slots
         FROM services s
+        LEFT JOIN users u ON u.id = s.owner_id
         ORDER BY s.created_at DESC'
     );
     $services = $servicesStatement->fetchAll();
@@ -72,6 +74,7 @@ require_once __DIR__ . '/../includes/header.php';
                                     <th>Nom</th>
                                     <th>Categorie</th>
                                     <th>Adresse</th>
+                                    <th>Proprietaire</th>
                                     <th>Duree</th>
                                     <th>Statut</th>
                                     <th>Actions</th>
@@ -83,6 +86,7 @@ require_once __DIR__ . '/../includes/header.php';
                                         <td><?= e((string) $service['nom']); ?></td>
                                         <td><?= e((string) $service['categorie']); ?></td>
                                         <td><?= e((string) $service['adresse']); ?></td>
+                                        <td><?= e(trim((string) $service['owner_name']) !== '' ? trim((string) $service['owner_name']) : 'Non assigne'); ?></td>
                                         <td><?= e((string) $service['duree_moyenne']); ?> min</td>
                                         <td>
                                             <span class="<?= e(badge_class_for((int) $service['actif'] === 1 ? 'actif' : 'inactif')); ?>">
@@ -92,7 +96,6 @@ require_once __DIR__ . '/../includes/header.php';
                                         <td>
                                             <div class="table-actions">
                                                 <a class="table-link" href="<?= url('admin/edit_service.php?id=' . (int) $service['id']); ?>">Modifier</a>
-                                                <a class="table-link" href="<?= url('admin/slots.php?service_id=' . (int) $service['id']); ?>">Creneaux</a>
                                                 <form method="POST" action="<?= url('actions/delete_service_action.php'); ?>">
                                                     <input type="hidden" name="service_id" value="<?= e((string) $service['id']); ?>">
                                                     <button class="table-button danger" type="submit" data-confirm="Supprimer ce service ? Cette action peut echouer si des reservations existent.">
@@ -117,4 +120,3 @@ require_once __DIR__ . '/../includes/header.php';
 </section>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
