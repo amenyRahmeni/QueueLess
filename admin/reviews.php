@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/admin_check.php';
 
+
 $pageTitle = 'Avis Admin';
 $pageDescription = 'Gestion des avis QueueLess.';
 $currentPage = 'admin_reviews';
