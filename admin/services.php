@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/admin_check.php';
 
+
+
 $pageTitle = 'Services Admin';
 $pageDescription = 'Gestion des services QueueLess.';
 $currentPage = 'admin_services';
