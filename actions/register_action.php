@@ -15,7 +15,7 @@ $telephone = trim((string) ($_POST['telephone'] ?? ''));
 $accountType = (string) ($_POST['account_type'] ?? 'user');
 $password = (string) ($_POST['password'] ?? '');
 $confirmPassword = (string) ($_POST['confirm_password'] ?? '');
-$allowedAccountTypes = ['admin', 'user', 'owner'];
+$allowedAccountTypes = ['user', 'owner'];
 
 if (!in_array($accountType, $allowedAccountTypes, true)) {
     $accountType = 'user';
