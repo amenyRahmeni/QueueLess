@@ -12,9 +12,7 @@
 .auth-showcase {
     padding: 2.4rem;
     border-radius: var(--radius-lg);
-    background:
-        radial-gradient(circle at top right, rgba(79, 216, 255, 0.14), transparent 26%),
-        linear-gradient(135deg, #07131f 0%, #0f2740 58%, #123857 100%);
+    background: var(--brand-gradient);
     color: var(--text-light);
     box-shadow: 0 26px 55px rgba(6, 18, 32, 0.18);
 }
@@ -99,6 +97,69 @@
     color: var(--text-main);
 }
 
+.choice-heading {
+    display: grid;
+    gap: 0.3rem;
+}
+
+.choice-heading p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.94rem;
+    line-height: 1.5;
+}
+
+.account-type-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+}
+
+.account-type-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: auto;
+    padding: 0.9rem 1.05rem;
+    border: 1px solid rgba(12, 32, 51, 0.12);
+    border-radius: 16px;
+    background: var(--panel-tint);
+    cursor: pointer;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.account-type-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--primary-rgb), 0.28);
+    background: #ffffff;
+}
+
+.account-type-card:has(input:checked) {
+    border-color: rgba(var(--primary-rgb), 0.55);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);
+}
+
+.account-type-card input {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    margin: 0;
+    accent-color: var(--primary-dark);
+}
+
+.account-type-content {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.account-type-card strong {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    line-height: 1.25;
+}
+
 .auth-form input {
     width: 100%;
     padding: 0.95rem 1rem;
@@ -109,10 +170,18 @@
     transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 
+.auth-form .account-type-card input {
+    width: 18px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+}
+
 .auth-form input:focus {
     outline: none;
-    border-color: rgba(16, 183, 216, 0.55);
-    box-shadow: 0 0 0 4px rgba(16, 183, 216, 0.12);
+    border-color: rgba(var(--primary-rgb), 0.55);
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.12);
 }
 
 .password-field {
@@ -131,7 +200,7 @@
     padding: 0.48rem 0.8rem;
     border: 0;
     border-radius: 999px;
-    background: rgba(16, 183, 216, 0.12);
+    background: rgba(var(--primary-rgb), 0.12);
     color: var(--primary-dark);
     font-size: 0.85rem;
     font-weight: 700;
@@ -170,6 +239,10 @@
     }
 
     .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .account-type-grid {
         grid-template-columns: 1fr;
     }
 }
