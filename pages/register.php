@@ -97,6 +97,38 @@ require_once __DIR__ . '/../includes/header.php';
                         >
                     </div>
 
+                    <div class="form-group account-type-group">
+                        <div class="choice-heading">
+                            <label>Choisir le type de compte</label>
+                        </div>
+
+                        <div class="account-type-grid">
+                            <label class="account-type-card">
+                                <input
+                                    type="radio"
+                                    name="account_type"
+                                    value="user"
+                                    <?= old('account_type', 'user') === 'user' ? 'checked' : ''; ?>
+                                >
+                                <span class="account-type-content">
+                                    <strong>Client</strong>
+                                </span>
+                            </label>
+
+                            <label class="account-type-card">
+                                <input
+                                    type="radio"
+                                    name="account_type"
+                                    value="owner"
+                                    <?= old('account_type') === 'owner' ? 'checked' : ''; ?>
+                                >
+                                <span class="account-type-content">
+                                    <strong>Client (services)</strong>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="register-password">Mot de passe</label>
