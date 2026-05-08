@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+
 $extraJs = $extraJs ?? [];
 ?>
     </main>
