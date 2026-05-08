@@ -63,7 +63,7 @@ if ($checkStatement->fetch()) {
 }
 
 $insertStatement = $pdo->prepare(
-    'INSERT INTO users (nom, prenom, email, password, telephone, role) VALUES (:nom, :prenom, :email, :password, :telephone, :role)'
+    'INSERT INTO users (nom, prenom, email, password, telephone, role, statut_compte) VALUES (:nom, :prenom, :email, :password, :telephone, :role, :statut_compte)'
 );
 
 $insertStatement->execute([
@@ -73,22 +73,10 @@ $insertStatement->execute([
     'password' => password_hash($password, PASSWORD_DEFAULT),
     'telephone' => $telephone,
     'role' => $role,
+    'statut_compte' => 'en_attente',
 ]);
-
-$userId = (int) $pdo->lastInsertId();
-$userStatement = $pdo->prepare('SELECT id, nom, prenom, email, telephone, role, created_at FROM users WHERE id = :id LIMIT 1');
-$userStatement->execute([
-    'id' => $userId,
-]);
-
-$user = $userStatement->fetch();
-
-if ($user) {
-    session_regenerate_id(true);
-    $_SESSION['user'] = $user;
-}
 
 
 clear_old_input();
-set_flash_message('success', 'Compte cree avec succes. Bienvenue sur QueueLess.');
-redirect(user_dashboard_path());
+set_flash_message('success', 'Compte cree avec succes. Votre compte est en attente de validation par l administrateur.');
+redirect('pages/login.php');
