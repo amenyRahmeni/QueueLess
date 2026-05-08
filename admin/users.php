@@ -16,7 +16,7 @@ $databaseWarning = null;
 try {
     $pdo = getPDO();
     $usersStatement = $pdo->query(
-        'SELECT id, nom, prenom, email, telephone, role, created_at
+        'SELECT id, nom, prenom, email, telephone, role, statut_compte, created_at
         FROM users
         ORDER BY created_at DESC'
     );
@@ -62,7 +62,9 @@ require_once __DIR__ . '/../includes/header.php';
                                     <th>Email</th>
                                     <th>Telephone</th>
                                     <th>Role</th>
+                                    <th>Statut</th>
                                     <th>Creation</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,7 +74,26 @@ require_once __DIR__ . '/../includes/header.php';
                                         <td><?= e((string) $account['email']); ?></td>
                                         <td><?= e((string) ($account['telephone'] ?? '-')); ?></td>
                                         <td><span class="<?= e(badge_class_for((string) $account['role'] === 'admin' ? 'warning' : 'success')); ?>"><?= e(ucfirst((string) $account['role'])); ?></span></td>
+                                        <td><span class="<?= e(badge_class_for((string) ($account['statut_compte'] ?? 'actif'))); ?>"><?= e(account_status_label((string) ($account['statut_compte'] ?? 'actif'))); ?></span></td>
                                         <td><?= e(format_datetime((string) $account['created_at'], 'd/m/Y')); ?></td>
+                                        <td>
+                                            <?php if ((string) ($account['role'] ?? '') !== 'admin'): ?>
+                                                <div class="table-actions">
+                                                    <form method="POST" action="<?= url('actions/update_user_status.php'); ?>">
+                                                        <input type="hidden" name="user_id" value="<?= e((string) $account['id']); ?>">
+                                                        <input type="hidden" name="statut_compte" value="actif">
+                                                        <button class="table-button" type="submit">Accepter</button>
+                                                    </form>
+                                                    <form method="POST" action="<?= url('actions/update_user_status.php'); ?>">
+                                                        <input type="hidden" name="user_id" value="<?= e((string) $account['id']); ?>">
+                                                        <input type="hidden" name="statut_compte" value="refuse">
+                                                        <button class="table-button danger" type="submit">Refuser</button>
+                                                    </form>
+                                                </div>
+                                            <?php else: ?>
+                                                <span class="status-badge muted">Protege</span>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -89,4 +110,3 @@ require_once __DIR__ . '/../includes/header.php';
 </section>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
