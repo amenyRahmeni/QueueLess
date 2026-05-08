@@ -86,6 +86,43 @@ function is_admin(): bool
     return (current_user()['role'] ?? 'user') === 'admin';
 }
 
+function is_service_owner(): bool
+{
+    return (current_user()['role'] ?? 'user') === 'owner';
+}
+
+function user_dashboard_path(): string
+{
+    $role = current_user()['role'] ?? 'user';
+
+    if ($role === 'admin') {
+        return 'admin/dashboard.php';
+    }
+
+    if ($role === 'owner') {
+        return 'owner/slots.php';
+    }
+
+    return 'pages/user_dashboard.php';
+}
+
+function current_user_owns_service(PDO $pdo, int $serviceId): bool
+{
+    $userId = (int) (current_user()['id'] ?? 0);
+
+    if ($userId <= 0 || $serviceId <= 0) {
+        return false;
+    }
+
+    $statement = $pdo->prepare('SELECT COUNT(*) FROM services WHERE id = :id AND owner_id = :owner_id');
+    $statement->execute([
+        'id' => $serviceId,
+        'owner_id' => $userId,
+    ]);
+
+    return (int) $statement->fetchColumn() > 0;
+}
+
 function nav_is_active(string $expectedPage, string $currentPage): string
 {
     return $expectedPage === $currentPage ? 'is-active' : '';
@@ -142,6 +179,17 @@ function reservation_status_label(string $status): string
     return $labels[$status] ?? ucfirst($status);
 }
 
+function account_status_label(string $status): string
+{
+    $labels = [
+        'en_attente' => 'En attente',
+        'actif' => 'Accepte',
+        'refuse' => 'Refuse',
+    ];
+
+    return $labels[$status] ?? ucfirst($status);
+}
+
 function badge_class_for(string $status): string
 {
     $status = strtolower($status);
@@ -150,11 +198,11 @@ function badge_class_for(string $status): string
         return 'status-badge success';
     }
 
-    if (in_array($status, ['annulee', 'inactif', 'danger'], true)) {
+    if (in_array($status, ['annulee', 'inactif', 'refuse', 'danger'], true)) {
         return 'status-badge danger';
     }
 
-    if (in_array($status, ['terminee', 'warning'], true)) {
+    if (in_array($status, ['terminee', 'en_attente', 'warning'], true)) {
         return 'status-badge warning';
     }
 
