@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+
 $currentPage = $currentPage ?? '';
 $user = current_user();
 $displayName = trim((string) (($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? '')));
