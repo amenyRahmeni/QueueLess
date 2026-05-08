@@ -160,7 +160,6 @@ require_once __DIR__ . '/../includes/header.php';
                         <span class="small-label">Reservations</span>
                         <h2>Dernieres demandes</h2>
                     </div>
-                    <a href="<?= url('admin/reservations.php'); ?>">Voir tout</a>
                 </div>
 
                 <?php if ($recentReservations): ?>
@@ -204,10 +203,6 @@ require_once __DIR__ . '/../includes/header.php';
                             <span>Services</span>
                             <strong>Gerer le catalogue</strong>
                         </a>
-                        <a class="quick-action" href="<?= url('admin/reservations.php'); ?>">
-                            <span>Reservations</span>
-                            <strong>Suivre les demandes</strong>
-                        </a>
                         <a class="quick-action" href="<?= url('admin/reviews.php'); ?>">
                             <span>Avis</span>
                             <strong>Controler les retours</strong>
@@ -221,7 +216,6 @@ require_once __DIR__ . '/../includes/header.php';
                             <span class="small-label">Reservations</span>
                             <h2>Etat global</h2>
                         </div>
-                        <a href="<?= url('admin/reservations.php'); ?>">Voir tout</a>
                     </div>
 
                     <div class="status-summary-grid">
