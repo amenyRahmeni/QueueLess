@@ -65,7 +65,6 @@ require_once __DIR__ . '/../includes/header.php';
                         <span class="small-label">Catalogue</span>
                         <h2>Services enregistres</h2>
                     </div>
-                    <a class="btn btn-primary" href="<?= url('admin/add_service.php'); ?>">Ajouter un service</a>
                 </div>
 
                 <?php if ($services): ?>
