@@ -26,7 +26,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 
 $pdo = getPDO();
-$statement = $pdo->prepare('SELECT id, nom, prenom, email, password, telephone, role, created_at FROM users WHERE email = :email LIMIT 1');
+$statement = $pdo->prepare('SELECT id, nom, prenom, email, password, telephone, role, statut_compte, created_at FROM users WHERE email = :email LIMIT 1');
 $statement->execute([
     'email' => $email,
 ]);
@@ -36,6 +36,16 @@ $user = $statement->fetch();
 
 if (!$user || !password_verify($password, $user['password'])) {
     set_flash_message('error', 'Email ou mot de passe incorrect.');
+    redirect('pages/login.php');
+}
+
+if (($user['statut_compte'] ?? 'actif') === 'en_attente') {
+    set_flash_message('warning', 'Votre compte est en attente de validation par l administrateur.');
+    redirect('pages/login.php');
+}
+
+if (($user['statut_compte'] ?? 'actif') === 'refuse') {
+    set_flash_message('error', 'Votre compte a ete refuse par l administrateur.');
     redirect('pages/login.php');
 }
 
