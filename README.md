@@ -1,6 +1,6 @@
 # QueueLess
 
-QueueLess est une application web de reservation de creneaux horaires developpee en PHP natif, MySQL, HTML, CSS et JavaScript. Le projet a ete pense pour une demonstration academique ou un PFE, avec une structure simple, claire et facile a executer localement sous XAMPP ou Laragon.
+QueueLess est une application web de reservation de creneaux horaires developpee en PHP natif, MySQL, HTML, CSS et JavaScript. Le projet a ete pense pour une demonstration academique, avec une structure simple, claire et facile a executer.
 
 ## Fonctionnalites principales
 
@@ -9,12 +9,12 @@ QueueLess est une application web de reservation de creneaux horaires developpee
 - consultation des services et de leurs details
 - reservation et annulation de creneaux
 - espace utilisateur avec profil, dashboard, reservations et avis
-- espace administrateur avec gestion des services, slots, reservations, utilisateurs et statistiques
+- espace administrateur avec gestion des services, slots, utilisateurs et statistiques
 
 ## Technologies
 
-- PHP 8+
-- MySQL / MariaDB
+- PHP 
+- MySQL
 - PDO
 - HTML5
 - CSS3
@@ -39,18 +39,6 @@ QueueLess est une application web de reservation de creneaux horaires developpee
     index.php
 ```
 
-## Installation locale
-
-1. Copier le dossier `queueless` dans `htdocs` de XAMPP ou dans le dossier web de Laragon.
-2. Demarrer Apache et MySQL.
-3. Creer une base de donnees `queueless` dans phpMyAdmin.
-4. Importer le fichier [`database/queueless.sql`](./database/queueless.sql).
-5. Verifier les informations de connexion dans [`config/database.php`](./config/database.php).
-6. Ouvrir le projet dans le navigateur :
-
-```text
-http://localhost/queueless/
-```
 
 ## Comptes de demonstration
 
@@ -86,7 +74,4 @@ http://localhost/queueless/
 - controle d acces utilisateur et administrateur
 - upload d images securise
 
-## Remarques
 
-- Le projet est volontairement en PHP natif pour rester simple a comprendre et facile a maintenir.
-- Si la base de donnees n est pas encore importee, certaines pages basculent en mode demo ou affichent un message clair.
