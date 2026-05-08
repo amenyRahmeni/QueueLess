@@ -9,7 +9,12 @@
     --text-muted: #6d7f91;
     --primary: #10b7d8;
     --primary-dark: #0a7f9d;
+    --primary-rgb: 16, 183, 216;
     --accent: #4fd8ff;
+    --brand-gradient: linear-gradient(135deg, #07131f 0%, #0f314d 58%, #0a7f9d 100%);
+    --brand-gradient-soft: linear-gradient(135deg, rgba(16, 183, 216, 0.16), rgba(79, 216, 255, 0.12));
+    --page-gradient: radial-gradient(circle at top left, rgba(79, 216, 255, 0.16), transparent 28%), linear-gradient(180deg, #f7fbfe 0%, #edf5fb 100%);
+    --panel-tint: #f4f9fc;
     --border: rgba(255, 255, 255, 0.12);
     --shadow: 0 18px 45px rgba(6, 18, 32, 0.16);
     --radius-lg: 28px;
@@ -30,9 +35,7 @@ body {
     margin: 0;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-main);
-    background:
-        radial-gradient(circle at top left, rgba(79, 216, 255, 0.16), transparent 28%),
-        linear-gradient(180deg, #f7fbfe 0%, #edf5fb 100%);
+    background: var(--page-gradient);
 }
 
 body.nav-open {
@@ -131,7 +134,7 @@ p {
     border-radius: 999px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     color: #04111d !important;
-    box-shadow: 0 12px 24px rgba(16, 183, 216, 0.26);
+    box-shadow: 0 12px 24px rgba(var(--primary-rgb), 0.26);
 }
 
 .nav-toggle {
@@ -155,9 +158,7 @@ p {
 
 .hero-section {
     padding: 5.5rem 0 4rem;
-    background:
-        radial-gradient(circle at top right, rgba(79, 216, 255, 0.14), transparent 26%),
-        linear-gradient(135deg, #07131f 0%, #0f2740 52%, #103755 100%);
+    background: var(--brand-gradient);
     color: var(--text-light);
 }
 
@@ -260,7 +261,7 @@ p {
 .btn-primary {
     background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     color: #04111d;
-    box-shadow: 0 18px 32px rgba(16, 183, 216, 0.28);
+    box-shadow: 0 18px 32px rgba(var(--primary-rgb), 0.28);
 }
 
 .btn-secondary {
@@ -304,7 +305,7 @@ p {
 }
 
 .mini-panel.highlight {
-    background: linear-gradient(135deg, rgba(16, 183, 216, 0.22), rgba(79, 216, 255, 0.14));
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.22), rgba(79, 216, 255, 0.14));
     border-color: rgba(79, 216, 255, 0.26);
 }
 
@@ -342,14 +343,14 @@ p {
 
 .section-heading.centered .section-badge {
     color: var(--primary-dark);
-    background: rgba(16, 183, 216, 0.08);
-    border-color: rgba(16, 183, 216, 0.14);
+    background: rgba(var(--primary-rgb), 0.08);
+    border-color: rgba(var(--primary-rgb), 0.14);
 }
 
 .section-badge-light {
     color: var(--primary-dark);
-    background: rgba(16, 183, 216, 0.08);
-    border-color: rgba(16, 183, 216, 0.14);
+    background: rgba(var(--primary-rgb), 0.08);
+    border-color: rgba(var(--primary-rgb), 0.14);
 }
 
 .section-heading h2 {
@@ -425,7 +426,7 @@ p {
     display: grid;
     place-items: center;
     border-radius: 18px;
-    background: linear-gradient(135deg, #0f2740 0%, #11a6cb 100%);
+    background: linear-gradient(135deg, var(--bg-dark-soft) 0%, var(--primary) 100%);
     color: #ffffff;
     font-weight: 800;
 }
@@ -504,7 +505,7 @@ p {
     display: grid;
     place-items: center;
     border-radius: 18px;
-    background: linear-gradient(135deg, #0f2740 0%, #11a6cb 100%);
+    background: linear-gradient(135deg, var(--bg-dark-soft) 0%, var(--primary) 100%);
     color: #ffffff;
     font-weight: 800;
 }
@@ -563,7 +564,7 @@ p {
     width: fit-content;
     padding: 0.42rem 0.82rem;
     border-radius: 999px;
-    background: rgba(16, 183, 216, 0.12);
+    background: rgba(var(--primary-rgb), 0.12);
     color: var(--primary-dark);
     font-size: 0.82rem;
     font-weight: 700;
@@ -580,7 +581,7 @@ p {
 
 .catalog-badge {
     color: rgba(244, 251, 255, 0.92);
-    background: linear-gradient(135deg, #0d2742 0%, #1397ba 100%);
+    background: linear-gradient(135deg, var(--bg-dark-soft) 0%, var(--primary-dark) 100%);
     border-color: transparent;
 }
 
@@ -646,7 +647,7 @@ p {
 
 .service-catalog-media {
     aspect-ratio: 16 / 9;
-    background: linear-gradient(135deg, rgba(16, 183, 216, 0.16), rgba(79, 216, 255, 0.12));
+    background: var(--brand-gradient-soft);
 }
 
 .service-catalog-media img,
@@ -715,7 +716,7 @@ p {
     min-height: 280px;
     border-radius: 24px;
     overflow: hidden;
-    background: linear-gradient(135deg, rgba(16, 183, 216, 0.16), rgba(79, 216, 255, 0.12));
+    background: var(--brand-gradient-soft);
 }
 
 .service-detail-content {
@@ -731,7 +732,7 @@ p {
     min-width: 160px;
     padding: 0.9rem 1rem;
     border-radius: 18px;
-    background: #f4f8fb;
+    background: var(--panel-tint);
 }
 
 .meta-pill span {
@@ -787,7 +788,7 @@ p {
     gap: 0.8rem;
     padding: 1rem 1.05rem;
     border-radius: 20px;
-    background: #f4f8fb;
+    background: var(--panel-tint);
 }
 
 .slot-card.is-disabled {
@@ -801,7 +802,7 @@ p {
 .review-card {
     padding: 1rem 1.05rem;
     border-radius: 20px;
-    background: #f4f8fb;
+    background: var(--panel-tint);
 }
 
 .review-top {
