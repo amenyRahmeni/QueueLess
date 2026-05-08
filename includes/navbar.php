@@ -19,6 +19,8 @@ $user = current_user();
             <?php if ($user): ?>
                 <?php if (is_admin()): ?>
                     <a class="<?= strpos($currentPage, 'admin_') === 0 ? 'is-active' : ''; ?>" href="<?= url('admin/dashboard.php'); ?>">Admin</a>
+                <?php elseif (is_service_owner()): ?>
+                    <a class="<?= strpos($currentPage, 'owner_') === 0 ? 'is-active' : ''; ?>" href="<?= url('owner/slots.php'); ?>">Mes creneaux</a>
                 <?php else: ?>
                     <a class="<?= nav_is_active('dashboard', $currentPage); ?>" href="<?= url('pages/user_dashboard.php'); ?>">Dashboard</a>
                 <?php endif; ?>
