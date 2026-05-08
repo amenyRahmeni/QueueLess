@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/admin_check.php';
 
+set_flash_message('warning', 'Les reservations sont gerees uniquement par le client proprietaire du service.');
+redirect('admin/dashboard.php');
+
 
 
 $pageTitle = 'Reservations Admin';
