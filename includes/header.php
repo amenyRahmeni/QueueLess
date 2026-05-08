@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
+
 require_once __DIR__ . '/functions.php';
+
 
 $pageTitle = $pageTitle ?? APP_NAME;
 $pageDescription = $pageDescription ?? 'QueueLess simplifie la reservation de creneaux horaires.';
