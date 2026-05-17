@@ -42,17 +42,35 @@ if ($nom === '' || $description === '' || $categorie === '' || $adresse === '' |
 }
 
 try {
-    $imageName = upload_service_image($_FILES['image'] ?? []);
-
     $pdo = getPDO();
+
+    if ($isOwner) {
+        $user = refresh_current_user($pdo);
+
+        if (!$user || (string) ($user['role'] ?? '') !== 'owner') {
+            set_flash_message('error', 'Acces refuse.');
+            redirect('index.php');
+        }
+
+        if (!is_account_active($user)) {
+            unset($_SESSION['user']);
+            set_flash_message('warning', 'Votre compte proprietaire doit etre accepte par l administrateur avant de deposer un service.');
+            redirect('pages/login.php');
+        }
+
+        $ownerId = (int) ($user['id'] ?? 0);
+    }
+
     if ($ownerId > 0) {
-        $ownerStatement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id AND role = "owner"');
+        $ownerStatement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id AND role = "owner" AND statut_compte = "actif"');
         $ownerStatement->execute(['id' => $ownerId]);
         if ((int) $ownerStatement->fetchColumn() === 0) {
-            set_flash_message('error', 'Proprietaire du service invalide.');
+            set_flash_message('error', 'Le proprietaire du service doit etre accepte par l administrateur.');
             redirect($formPath);
         }
     }
+
+    $imageName = upload_service_image($_FILES['image'] ?? []);
 
     $statement = $pdo->prepare(
         'INSERT INTO services (owner_id, nom, description, categorie, adresse, image, duree_moyenne, actif)
