@@ -31,10 +31,10 @@ try {
     $pdo = getPDO();
 
     if ($ownerId > 0) {
-        $ownerStatement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id AND role = "owner"');
+        $ownerStatement = $pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id AND role = "owner" AND statut_compte = "actif"');
         $ownerStatement->execute(['id' => $ownerId]);
         if ((int) $ownerStatement->fetchColumn() === 0) {
-            set_flash_message('error', 'Proprietaire du service invalide.');
+            set_flash_message('error', 'Le proprietaire du service doit etre accepte par l administrateur.');
             redirect('admin/edit_service.php?id=' . $serviceId);
         }
     }
